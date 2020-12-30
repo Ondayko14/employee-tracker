@@ -6,9 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
-    "migrate": "mysql2 db/employee.db < db/schema.sql",
-    "seed": "mysql2 db/employee.db < db/seeds.sql",
-    "db": "mysql2 db/employee.db"
+    "sqlstart": "mysql -u root -p"
   },
   "repository": {
     "type": "git",
