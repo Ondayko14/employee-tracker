@@ -1,9 +1,9 @@
 const mysql = require('mysql2');
 const inquirer = require('inquirer');
 const cTable = require('console.table');
-const {viewDepartments, connectToDatabase, viewRoles, viewEmployees} = require('./database');
+const {viewDepartments, connectToDatabase, viewRoles, viewEmployees, addDept, departmentChoices, unqiueDept, addRole} = require('./database');
 //Ask Questions
-const viewQuestions = function() {
+const viewQuestions = () => {
     connectToDatabase();
 
     //Initial Question about what to do
@@ -30,12 +30,22 @@ const viewQuestions = function() {
             viewEmployees()
             .then(viewQuestions);
         } else if (viewData.views === 'add a department') {
-            //Calls in Add Dept Function
-            addDept()
-            .then(viewQuestions);
-            console.log('add a new department');
+            //Asks for the name of the dept
+            inquirer.prompt(
+                {  
+                    type: 'input',
+                    name: 'department_name',
+                    message: 'What would you like to call this new Department?'
+                }
+            ).then(question_dept => {
+                //Calls in Add Department
+                addDept(question_dept.department_name)
+                .then(viewQuestions);
+            });
         } else if (viewData.views === 'add a role') {
-            console.log('add a new role');
+            //Asks for the name of the role, salary, and department
+            roleQuestions()
+            .then(viewQuestions);
         } else if (viewData.views === 'add an employee') {
             console.log('add a new employee');
         } else if (viewData.views === 'update an employee'){
@@ -44,6 +54,32 @@ const viewQuestions = function() {
             console.log('Goodbye!');
             process.exit();
         }
+    });
+};
+
+// Seperate Function Calls for Questions
+async function roleQuestions () {
+    return inquirer.prompt([
+        {
+            type: 'input',
+            name: 'role_name',
+            message: 'What is the name of this role?'
+        },
+        {
+            type: 'input',
+            name: 'role_salary',
+            message: 'What is the salary for this position?'
+        },
+        {
+            type: 'list',
+            choices: await departmentChoices(),
+            name: 'department_selection',
+            message: 'Please select a department for this role'
+        }
+    ]).then(async data => {
+        console.log(data);
+        //call a function that looks for the id of the selected dept
+        addRole(data.role_name, data.role_salary, await unqiueDept(data))    
     });
 };
 

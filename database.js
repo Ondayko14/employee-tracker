@@ -73,9 +73,67 @@ const viewEmployees = () => {
 };
 
 //Add Department
-const addDept = () => {
+const addDept = (name) => {
     return new Promise((res, rej) => {
-        pool.ex
-    })
-}
-module.exports =  {connectToDatabase, viewDepartments, viewRoles, viewEmployees};
+        pool.execute(`
+        INSERT INTO departments (name)
+        VALUES
+        (?)
+        `,[name],
+        (err, results, _fields) => {
+            if(err) console.log(err);
+            res(console.table(results))
+        });
+    });
+};
+
+//view Departments for inquirer selection
+const departmentChoices = () => {
+    return new Promise((res, rej) => {
+    pool.query(`
+    SELECT * FROM departments`, 
+    (err, results, _fields) => {
+        if(err) console.log(err);
+            let array = [];
+            for (let i = 0; i < results.length; i++) {
+                array.push(results[i].name);
+            };
+            console.log(array);
+            res(array);
+        });
+    });
+};
+
+//search for the primary key of the sleceted department
+const unqiueDept = (data) => {
+    return new Promise((res, rej) => {
+        pool.execute(`
+        SELECT id
+        FROM departments
+        WHERE departments.name = ?
+        `,[data.department_selection],
+        (err, results, _fields) => {
+            if(err) console.log(err);
+            let dept_id = results.map(data => data.id);
+            let id = dept_id[0];
+            console.log(id);
+            res(id);
+        });
+    });
+};
+
+//Adds Role name, salary & Dept.
+const addRole = (name, salary, dept) => {
+    return new Promise((res, rej) => {
+        pool.execute(`
+        INSERT INTO roles (title, salary, department_id)
+        VALUES
+        (?, ?, ?)
+        `,[name, salary, dept],
+        (err, results, _fields) => {
+            if(err) console.log(err);
+            res(console.table(results));
+        });
+    });
+};
+module.exports =  {connectToDatabase, viewDepartments, viewRoles, viewEmployees, addDept, departmentChoices, unqiueDept, addRole};
