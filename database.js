@@ -277,4 +277,18 @@ const addEmployee = (first_name, last_name, manager_id, role_id) => {
     });
 };
 
-module.exports =  {connectToDatabase, viewDepartments, viewRoles, viewEmployees, addDept, departmentChoices, unqiueDept, addRole, roleChoices, managerChoices, uniqueManager, addEmployee, uniqueRole, employeeChoices, roleUpdate, uniqueEmployee};
+//Updates the employees Role
+const finalUpdate = (role, name) => {
+    console.log(role, name);
+    return new Promise((res, rej) => {
+        pool.execute(`
+        UPDATE employee.employees SET role_id = ? WHERE (id = ?)
+        `, [name, role],
+        (err, results, _fields) => {
+            if(err) console.log(err);
+            res(console.table(results));
+        });
+    });
+};
+
+module.exports =  {connectToDatabase, viewDepartments, viewRoles, viewEmployees, addDept, departmentChoices, unqiueDept, addRole, roleChoices, managerChoices, uniqueManager, addEmployee, uniqueRole, employeeChoices, roleUpdate, uniqueEmployee, finalUpdate};
