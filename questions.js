@@ -1,7 +1,7 @@
 const mysql = require('mysql2');
 const inquirer = require('inquirer');
 const cTable = require('console.table');
-const {viewDepartments, connectToDatabase, viewRoles, viewEmployees, addDept, departmentChoices, unqiueDept, addRole} = require('./database');
+const {viewDepartments, connectToDatabase, viewRoles, viewEmployees, addDept, departmentChoices, unqiueDept, addRole, roleChoices, managerChoices, uniqueManager, addEmployee, uniqueRole} = require('./database');
 //Ask Questions
 const viewQuestions = () => {
     connectToDatabase();
@@ -47,7 +47,10 @@ const viewQuestions = () => {
             roleQuestions()
             .then(viewQuestions);
         } else if (viewData.views === 'add an employee') {
-            console.log('add a new employee');
+            //Asks for employee firstname, lastname, role & manager
+            newEmployeeQuestions()
+            .then(viewQuestions);
+
         } else if (viewData.views === 'update an employee'){
             console.log('update an employee');
         } else {
@@ -58,6 +61,8 @@ const viewQuestions = () => {
 };
 
 // Seperate Function Calls for Questions
+
+//Questions for adding a new role
 async function roleQuestions () {
     return inquirer.prompt([
         {
@@ -80,6 +85,38 @@ async function roleQuestions () {
         console.log(data);
         //call a function that looks for the id of the selected dept
         addRole(data.role_name, data.role_salary, await unqiueDept(data))    
+    });
+};
+
+//questions for employee firstname, lastname, role & manager
+async function newEmployeeQuestions () {
+    return inquirer.prompt([
+        {
+            type: 'input',
+            name: 'first_name',
+            message: 'What is the employees first name?'
+        },
+        {
+            type: 'input',
+            name: 'last_name',
+            message: 'What is the employees last name?'
+        },
+        {
+            type: 'list',
+            choices: await roleChoices(),
+            name: 'role',
+            message: 'Please select a role for this employee'
+        },
+        {
+            type: 'list',
+            choices: await managerChoices(),
+            name: 'manager',
+            message: 'Who is this employees manager?' 
+        }
+    ]).then(async data => {
+        console.log(data);
+        //call a function that looks for the id of the selected role
+        addEmployee(data.first_name, data.last_name, await uniqueManager(data), await uniqueRole(data));
     });
 };
 

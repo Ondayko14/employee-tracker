@@ -86,6 +86,57 @@ const addDept = (name) => {
         });
     });
 };
+//view the current available roles
+const roleChoices = () => {
+    return new Promise((res, rej) => {
+    pool.query(`
+    SELECT * FROM roles`,
+    (err, results, _fields) => {
+        if (err) console.log(err);
+        let array = [];
+        for (let i = 0; i < results.length; i++) {
+            array.push(results[i].title);
+        };
+        res(array);
+        });
+    });
+};
+
+//view the current managers
+const managerChoices = () => {
+    return new Promise((res, rej) => {
+        pool.query(`
+        SELECT * FROM employees
+        WHERE manager_id IS NULL
+        `, 
+        (err, results, _fields) => {
+            if(err) console.log(err);
+            let array = [];
+            for (let i = 0; i < results.length; i++) {
+                array.push(results[i].first_name);
+            };
+            console.log(array);
+            res(array);
+        });
+    });
+};
+
+//search for the primary key of the manager.
+const uniqueManager = (data) => {
+    return new Promise((res, rej) => {
+        pool.query(`
+        SELECT id FROM employees
+        WHERE employees.first_name = ?
+        `,[data.manager],
+        (err, results, _fields) => {
+            if(err) console.log(err);
+            let manager_id = results.map(data => data.id);
+            let id = manager_id[0];
+            console.log(id);
+            res(id);
+        })
+    })
+}
 
 //view Departments for inquirer selection
 const departmentChoices = () => {
@@ -104,7 +155,7 @@ const departmentChoices = () => {
     });
 };
 
-//search for the primary key of the sleceted department
+//search for the primary key of the seleceted department
 const unqiueDept = (data) => {
     return new Promise((res, rej) => {
         pool.execute(`
@@ -122,6 +173,24 @@ const unqiueDept = (data) => {
     });
 };
 
+//Searches for id of selected role
+const uniqueRole = (data) => {
+    return new Promise((res, rej) => {
+        pool.execute(`
+        SELECT id
+        FROM roles
+        WHERE roles.title = ?
+        `,[data.role],
+        (err, results, _fields) => {
+            if(err) console.log(err);
+            let role_id = results.map(data => data.id);
+            let id = role_id[0];
+            console.log(id);
+            res(id);
+        })
+    })
+}
+
 //Adds Role name, salary & Dept.
 const addRole = (name, salary, dept) => {
     return new Promise((res, rej) => {
@@ -136,4 +205,19 @@ const addRole = (name, salary, dept) => {
         });
     });
 };
-module.exports =  {connectToDatabase, viewDepartments, viewRoles, viewEmployees, addDept, departmentChoices, unqiueDept, addRole};
+
+//Adds Employee
+const addEmployee = (first_name, last_name, manager_id, role_id) => {
+    return new Promise((res, rej) => {
+        pool.execute(`
+        INSERT INTO employees (first_name, last_name, manager_id, role_id)
+        VALUES (?, ?, ?, ?)
+        `,[first_name, last_name, manager_id, role_id],
+        (err, results, _fields) => {
+            if(err) console.log(err);
+            res(console.table(results));
+        });
+    });
+};
+
+module.exports =  {connectToDatabase, viewDepartments, viewRoles, viewEmployees, addDept, departmentChoices, unqiueDept, addRole, roleChoices, managerChoices, uniqueManager, addEmployee, uniqueRole};
