@@ -2,15 +2,17 @@ const mysql = require('mysql2');
 const viewQuestions = require('./questions');
 const cTable = require('console.table');
 
+const sqlpass = 'password'
+
 //Connect to database
 const pool = mysql.createPool({
     host: 'localhost',
     port: 3306,
-    user: 'root',
-    password: 'Ilovedick69inmamouff$',
+    user: 'newUser',
+    password: sqlpass,
     database: 'employee',
     waitForConnections: true,
-    connectionLimit: 10,
+    connectionLimit: 50,
     queueLimit:0
 });
 

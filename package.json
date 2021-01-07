@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "migrate": "mysql -u root -pIlovedick69inmamouff$ < schema.sql",
-    "seed": "mysql -u root -pIlovedick69inmamouff$ employee < seeds.sql",
+    "migrate": "mysql -u root -p < schema.sql",
+    "seed": "mysql -u root -p employee < seeds.sql",
     "start": "node index.js"
   },
   "repository": {
