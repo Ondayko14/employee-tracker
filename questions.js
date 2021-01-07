@@ -1,7 +1,7 @@
 const mysql = require('mysql2');
 const inquirer = require('inquirer');
 const cTable = require('console.table');
-const {viewDepartments, connectToDatabase, viewRoles, viewEmployees, addDept, departmentChoices, unqiueDept, addRole, roleChoices, managerChoices, uniqueManager, addEmployee, uniqueRole, employeeChoices, roleUpdate} = require('./database');
+const {viewDepartments, connectToDatabase, viewRoles, viewEmployees, addDept, departmentChoices, unqiueDept, addRole, roleChoices, managerChoices, uniqueManager, addEmployee, uniqueRole, employeeChoices, roleUpdate, uniqueEmployee} = require('./database');
 //Ask Questions
 const viewQuestions = () => {
     connectToDatabase();
@@ -139,7 +139,9 @@ async function updateEmployee () {
         }
     ]).then(async data => {
         console.log(data);
-        
+        //Update the role on the selected employee
+        //finalUpdate(await uniqueEmployee(data), await uniqueRole(data))
+        uniqueEmployee(data);
     })
 };
 

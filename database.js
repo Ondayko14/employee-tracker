@@ -125,6 +125,7 @@ const addDept = (name) => {
         });
     });
 };
+
 //view the current available roles
 const roleChoices = () => {
     return new Promise((res, rej) => {
@@ -173,9 +174,26 @@ const uniqueManager = (data) => {
             let id = manager_id[0];
             console.log(id);
             res(id);
-        })
-    })
-}
+        });
+    });
+};
+
+//search for the primary key of the employee
+const uniqueEmployee = (data) => {
+    return new Promise((res, rej) => {
+        pool.query(`
+        SELECT id FROM employees
+        WHERE CONCAT(employees.first_name, employees.last_name) = ?
+        `, [data.employee],
+        (err, results, _fields) => {
+            if(err) console.log(err);
+            let employee_id = results.map(data => data.id);
+            let id = employee_id[0];
+            console.log(id);
+            res(id);
+        });
+    });
+};
 
 //view Departments for inquirer selection
 const departmentChoices = () => {
@@ -259,4 +277,4 @@ const addEmployee = (first_name, last_name, manager_id, role_id) => {
     });
 };
 
-module.exports =  {connectToDatabase, viewDepartments, viewRoles, viewEmployees, addDept, departmentChoices, unqiueDept, addRole, roleChoices, managerChoices, uniqueManager, addEmployee, uniqueRole, employeeChoices, roleUpdate};
+module.exports =  {connectToDatabase, viewDepartments, viewRoles, viewEmployees, addDept, departmentChoices, unqiueDept, addRole, roleChoices, managerChoices, uniqueManager, addEmployee, uniqueRole, employeeChoices, roleUpdate, uniqueEmployee};
