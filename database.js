@@ -35,10 +35,28 @@ const viewDepartments = () => {
     (err, results, _fields) => {
         if(err) console.log(err);
             res(console.table(results))
-        })
+        });
     });
 };
 
+//View Role Name
+const roleUpdate = () => {
+    return new Promise((res, rej) => {
+        pool.query(`
+        SELECT *
+        FROM roles
+        `,
+        (err, results, _fields) => {
+            if(err) console.log(err)
+            let array = [];
+            for(let i= 0; i < results.length; i++) {
+                array.push(results[i].title);
+            }
+            console.log(array);
+            res(array);
+        });
+    });
+};
 
 //View Role
 const viewRoles = () => {
@@ -241,4 +259,4 @@ const addEmployee = (first_name, last_name, manager_id, role_id) => {
     });
 };
 
-module.exports =  {connectToDatabase, viewDepartments, viewRoles, viewEmployees, addDept, departmentChoices, unqiueDept, addRole, roleChoices, managerChoices, uniqueManager, addEmployee, uniqueRole, employeeChoices};
+module.exports =  {connectToDatabase, viewDepartments, viewRoles, viewEmployees, addDept, departmentChoices, unqiueDept, addRole, roleChoices, managerChoices, uniqueManager, addEmployee, uniqueRole, employeeChoices, roleUpdate};
