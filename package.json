@@ -2,9 +2,11 @@
   "name": "employee-tracker",
   "version": "1.0.0",
   "description": "",
-  "main": "database.js",
+  "main": "index.js",
   "scripts": {
-    "start": "node database.js"
+    "migrate": "mysql -u root -pIlovedick69inmamouff$ < schema.sql",
+    "seed": "mysql -u root -pIlovedick69inmamouff$ employee < seeds.sql",
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",
