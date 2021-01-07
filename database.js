@@ -291,4 +291,18 @@ const finalUpdate = (role, name) => {
     });
 };
 
-module.exports =  {connectToDatabase, viewDepartments, viewRoles, viewEmployees, addDept, departmentChoices, unqiueDept, addRole, roleChoices, managerChoices, uniqueManager, addEmployee, uniqueRole, employeeChoices, roleUpdate, uniqueEmployee, finalUpdate};
+//Deletes the employees based on id
+const deleteEmployee = (name) => {
+    return new Promise((res, rej) => {
+        pool.execute(`
+        DELETE FROM employee.employees WHERE (id = ?)
+        `,[name],
+        (err, results, _fields) => {
+            if(err) console.log(err);
+            res(console.table(results));
+        });
+    });
+};
+
+
+module.exports =  {connectToDatabase, viewDepartments, viewRoles, viewEmployees, addDept, departmentChoices, unqiueDept, addRole, roleChoices, managerChoices, uniqueManager, addEmployee, uniqueRole, employeeChoices, roleUpdate, uniqueEmployee, finalUpdate, deleteEmployee};

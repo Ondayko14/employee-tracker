@@ -1,7 +1,7 @@
 const mysql = require('mysql2');
 const inquirer = require('inquirer');
 const cTable = require('console.table');
-const {viewDepartments, connectToDatabase, viewRoles, viewEmployees, addDept, departmentChoices, unqiueDept, addRole, roleChoices, managerChoices, uniqueManager, addEmployee, uniqueRole, employeeChoices, roleUpdate, uniqueEmployee, finalUpdate} = require('./database');
+const {viewDepartments, connectToDatabase, viewRoles, viewEmployees, addDept, departmentChoices, unqiueDept, addRole, roleChoices, managerChoices, uniqueManager, addEmployee, uniqueRole, employeeChoices, roleUpdate, uniqueEmployee, finalUpdate, deleteEmployee} = require('./database');
 //Ask Questions
 const viewQuestions = () => {
     connectToDatabase();
@@ -12,7 +12,7 @@ const viewQuestions = () => {
             type: 'list',
             name: 'views',
             message: 'What would you like to do?',
-            choices: ['view all departments', 'view all roles', 'view all employees', 'add a department', 'add a role', 'add an employee', 'update an employee role', 'exit']
+            choices: ['view all departments', 'view all roles', 'view all employees', 'add a department', 'add a role', 'add an employee', 'update an employee role', 'delete an employee', 'exit']
         },
         //Picks out which choice was made and executes the display and follow up questions
     ).then(viewData => {
@@ -54,6 +54,10 @@ const viewQuestions = () => {
         } else if (viewData.views === 'update an employee role'){
             //Asks whiche employee you would like to update and their role
             updateEmployee()
+            .then(viewQuestions);
+        } else if (viewData.views === 'delete an employee'){
+            //Ask which employee you would like to remove
+            deleteEmployeeQuestions()
             .then(viewQuestions);
         } else {
             console.log('Goodbye!');
@@ -143,5 +147,20 @@ async function updateEmployee () {
         finalUpdate(await uniqueEmployee(data), await uniqueRole(data))
     })
 };
+
+//Ask which employee you would like to delete
+async function deleteEmployeeQuestions() {
+    return inquirer.prompt([
+        {
+            type: 'list',
+            choices: await employeeChoices(),
+            name: 'employee',
+            message: 'Which employee would you like to remove?'
+        }
+    ]).then(async data => {
+        console.log(data);
+        deleteEmployee(await uniqueEmployee(data));
+    })
+}
 
 module.exports = viewQuestions;
