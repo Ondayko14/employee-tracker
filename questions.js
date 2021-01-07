@@ -1,7 +1,7 @@
 const mysql = require('mysql2');
 const inquirer = require('inquirer');
 const cTable = require('console.table');
-const {viewDepartments, connectToDatabase, viewRoles, viewEmployees, addDept, departmentChoices, unqiueDept, addRole, roleChoices, managerChoices, uniqueManager, addEmployee, uniqueRole} = require('./database');
+const {viewDepartments, connectToDatabase, viewRoles, viewEmployees, addDept, departmentChoices, unqiueDept, addRole, roleChoices, managerChoices, uniqueManager, addEmployee, uniqueRole, employeeChoices} = require('./database');
 //Ask Questions
 const viewQuestions = () => {
     connectToDatabase();
@@ -51,8 +51,10 @@ const viewQuestions = () => {
             newEmployeeQuestions()
             .then(viewQuestions);
 
-        } else if (viewData.views === 'update an employee'){
-            console.log('update an employee');
+        } else if (viewData.views === 'update an employee role'){
+            //Asks whiche employee you would like to update and their role
+            updateEmployee()
+            .then(viewQuestions);
         } else {
             console.log('Goodbye!');
             process.exit();
@@ -118,6 +120,21 @@ async function newEmployeeQuestions () {
         //call a function that looks for the id of the selected role
         addEmployee(data.first_name, data.last_name, await uniqueManager(data), await uniqueRole(data));
     });
+};
+
+//Asks which employee you would like to update, and which role you would like to change
+async function updateEmployee () {
+    return inquirer.prompt([
+        {
+            type: 'list',
+            choices: await employeeChoices(),
+            name: 'employee',
+            message: 'Which employee would you like to update?'
+        }
+    ]).then(async data => {
+        console.log(data);
+        
+    })
 };
 
 module.exports = viewQuestions;

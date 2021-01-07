@@ -56,6 +56,24 @@ const viewRoles = () => {
     });
 };
 
+//Select only employees first and last name
+const employeeChoices = () => {
+    return new Promise ((res, rej) => {
+        pool.query(`
+        SELECT CONCAT(first_name, last_name) AS name
+        FROM employees
+        `, (err, results, _fields) => {
+            if(err) console.log(err);
+            let array = [];
+            for(let i = 0; i < results.length; i++) {
+                array.push(results[i].name);
+            };
+            console.log(array);
+            res(array);
+        });
+    });
+};
+
 //view Employees
 const viewEmployees = () => {
     return new Promise((res, rej) => {
@@ -223,4 +241,4 @@ const addEmployee = (first_name, last_name, manager_id, role_id) => {
     });
 };
 
-module.exports =  {connectToDatabase, viewDepartments, viewRoles, viewEmployees, addDept, departmentChoices, unqiueDept, addRole, roleChoices, managerChoices, uniqueManager, addEmployee, uniqueRole};
+module.exports =  {connectToDatabase, viewDepartments, viewRoles, viewEmployees, addDept, departmentChoices, unqiueDept, addRole, roleChoices, managerChoices, uniqueManager, addEmployee, uniqueRole, employeeChoices};
