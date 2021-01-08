@@ -1,4 +1,4 @@
-function generateHtml(data) {
+async function generateHtml(data) {
     //stores the individual employees with their corresponding values
     let htmlString = [];
     //might not need this
@@ -8,7 +8,6 @@ function generateHtml(data) {
     //console.log(data);
     for (let i = 0; i < data.length; i++) {
 
-        let employeeType = "";
         //get role
         const employeeRole = data.map(data => data.title);
         const employeeRoleFinal = employeeRole[i];
@@ -28,7 +27,6 @@ function generateHtml(data) {
         const department = data.map(data => data.department);
         const departmentFinal = department[i];
         //create the html based on the created person above
-        if(employeeRoleFinal === 'Engineer') {
             htmlString[i] = `
             <div class="card text-dark bg-info m-3" style="width: 18rem; height: 14rem;">
                 <div class="card-header">${employeeFirstNameFinal} ${employeeLastNameFinal}</div>
@@ -39,10 +37,29 @@ function generateHtml(data) {
                     <p class="card-text">Department:${departmentFinal}</p>
                 </div>
             </div>`;
-        }
+        
     };
-    console.log(htmlString);
-    return;
+    const string = `
+    <!DOCTYPE html>
+        <html lang="en">
+        <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Employee Card Generator</title>
+            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+            <link href="./style.css" rel="stylesheet">
+        </head>
+        <body>
+            <header class="bg-success d-flex justify-content-center align-items-center flex-wrap">
+                <h1 class="text-white">My Team!</h1>
+            </header>
+            <section class="d-flex justify-content-center align-items-start flex-wrap">
+                ${htmlString.join('')}
+            </section>
+        </body>
+    </html>`;
+    console.log('string is: '+ string);
+    return string;
 };
 
 module.exports = {generateHtml};
