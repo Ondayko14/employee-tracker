@@ -306,5 +306,23 @@ const deleteEmployee = (name) => {
     });
 };
 
+const sendInformation = () => {
+    return new Promise((res, rej) => {
+        pool.query(`
+        SELECT e1.id, e1.first_name, e1.last_name, CONCAT(e2.first_name, e2.last_name) AS manager, roles.title, roles.salary, departments.name AS department
+        FROM employees e1
+        LEFT JOIN employees e2
+        ON (e1.manager_id = e2.id)
+        RIGHT JOIN roles
+        ON (e1.role_id = roles.id)
+        RIGHT JOIN departments
+        ON (roles.department_id = departments.id)`,
+        (err, results, _fields) => {
+            if(err) console.log(err);
+            res(results);
+        });
+    });
+};
 
-module.exports =  {connectToDatabase, viewDepartments, viewRoles, viewEmployees, addDept, departmentChoices, unqiueDept, addRole, roleChoices, managerChoices, uniqueManager, addEmployee, uniqueRole, employeeChoices, roleUpdate, uniqueEmployee, finalUpdate, deleteEmployee};
+
+module.exports =  {connectToDatabase, viewDepartments, viewRoles, viewEmployees, addDept, departmentChoices, unqiueDept, addRole, roleChoices, managerChoices, uniqueManager, addEmployee, uniqueRole, employeeChoices, roleUpdate, uniqueEmployee, finalUpdate, deleteEmployee, sendInformation};

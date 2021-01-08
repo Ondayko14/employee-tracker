@@ -1,7 +1,8 @@
 const mysql = require('mysql2');
 const inquirer = require('inquirer');
 const cTable = require('console.table');
-const {viewDepartments, connectToDatabase, viewRoles, viewEmployees, addDept, departmentChoices, unqiueDept, addRole, roleChoices, managerChoices, uniqueManager, addEmployee, uniqueRole, employeeChoices, roleUpdate, uniqueEmployee, finalUpdate, deleteEmployee} = require('./database');
+const {viewDepartments, connectToDatabase, viewRoles, viewEmployees, addDept, departmentChoices, unqiueDept, addRole, roleChoices, managerChoices, uniqueManager, addEmployee, uniqueRole, employeeChoices, roleUpdate, uniqueEmployee, finalUpdate, deleteEmployee, sendInformation} = require('./database');
+const {generateHtml} = require('./assets/js/generateHtml');
 //Ask Questions
 const viewQuestions = () => {
     connectToDatabase();
@@ -12,7 +13,7 @@ const viewQuestions = () => {
             type: 'list',
             name: 'views',
             message: 'What would you like to do?',
-            choices: ['view all departments', 'view all roles', 'view all employees', 'add a department', 'add a role', 'add an employee', 'update an employee role', 'delete an employee', 'exit']
+            choices: ['view all departments', 'view all roles', 'view all employees', 'add a department', 'add a role', 'add an employee', 'update an employee role', 'delete an employee', 'Print', 'exit']
         },
         //Picks out which choice was made and executes the display and follow up questions
     ).then(viewData => {
@@ -59,6 +60,12 @@ const viewQuestions = () => {
             //Ask which employee you would like to remove
             deleteEmployeeQuestions()
             .then(viewQuestions);
+        } else if (viewData.views === 'Print'){
+            //send all the data from employees into js/index.js for html parsing
+            sendInformation()
+            .then(data => {
+                generateHtml(data);
+            });
         } else {
             console.log('Goodbye!');
             process.exit();
@@ -160,7 +167,7 @@ async function deleteEmployeeQuestions() {
     ]).then(async data => {
         console.log(data);
         deleteEmployee(await uniqueEmployee(data));
-    })
-}
+    });
+};
 
 module.exports = viewQuestions;
