@@ -30,11 +30,18 @@ function generateHtml(data) {
         //create the html based on the created person above
         if(employeeRoleFinal === 'Engineer') {
             htmlString[i] = `
-            <div class ="" > </div>
-            `
+            <div class="card text-dark bg-info m-3" style="width: 18rem; height: 14rem;">
+                <div class="card-header">${employeeFirstNameFinal} ${employeeLastNameFinal}</div>
+                <div class="card-body">
+                    <h5 class="card-title">${employeeRoleFinal}</h5>
+                    <p class="card-text">Reporting Manager:${managerFinal}</p>
+                    <p class="card-text">Salary: $${salaryFinal}</p>
+                    <p class="card-text">Department:${departmentFinal}</p>
+                </div>
+            </div>`;
         }
     };
-    console.log(data);
+    console.log(htmlString);
     return;
 };
 
