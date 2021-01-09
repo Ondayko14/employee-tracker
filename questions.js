@@ -66,10 +66,6 @@ const viewQuestions = () => {
             sendInformation()
             .then(data => {
                 generateHtml(data);
-            //})
-            // .then(newData => {
-            //     console.log('seconed level of data is: '+newData);
-            //     writeFile(write);
             }).then(viewQuestions);
         } else {
             console.log('Goodbye!');
@@ -205,28 +201,27 @@ const generateHtml = (data)  => {
         //get department
         const department = data.map(data => data.department);
         const departmentFinal = department[i];
-        console.log(managerFinal);
         //create the html based on the created person above
-        if(managerFinal !== "null"){
+        if(managerFinal !== null){
             htmlString[i] = `
-            <div class="card text-dark employeeCardBackground m-3 text-capitalize" style="width: 18rem; height: 17rem;">
+            <div class="card text-dark employeeCardBackground m-3 text-capitalize" style="width: 18rem; height: 19rem;">
                 <div class="card-header employeeCardHeader fs-3 fw-bold">${employeeFirstNameFinal} ${employeeLastNameFinal}</div>
                 <div class="card-body">
                     <h5 class="card-title fs-4">${employeeRoleFinal}</h5>
-                    <p class="card-text">Reporting Manager: ${managerFinal}</p>
-                    <p class="card-text">Salary: $${salaryFinal}</p>
-                    <p class="card-text">Department: ${departmentFinal}</p>
+                    <p class="card-text"><span class ="fw-bold">Reporting Manager:</span> ${managerFinal}</p>
+                    <p class="card-text"><span class ="fw-bold">Salary:</span> $${salaryFinal}</p>
+                    <p class="card-text"><span class ="fw-bold">Department:</span> ${departmentFinal}</p>
                 </div>
             </div>`;
     } else {
         //removes the Reports to <p> Element if they do not have a manager
         htmlString[i] = `
-            <div class="card text-dark employeeCardBackground m-3 text-capitalize" style="width: 18rem; height: 17rem;">
+            <div class="card text-dark employeeCardBackground m-3 text-capitalize" style="width: 18rem; height: 19rem;">
                 <div class="card-header employeeCardHeader fs-3 fw-bold">${employeeFirstNameFinal} ${employeeLastNameFinal}</div>
                 <div class="card-body">
                     <h5 class="card-title fs-4">${employeeRoleFinal}</h5>
-                    <p class="card-text">Salary: $${salaryFinal}</p>
-                    <p class="card-text">Department: ${departmentFinal}</p>
+                    <p class="card-text"><span class ="fw-bold">Salary:</span> $${salaryFinal}</p>
+                    <p class="card-text"><span class ="fw-bold">Department:</span> ${departmentFinal}</p>
                 </div>
             </div>`;
     };
