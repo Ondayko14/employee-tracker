@@ -205,42 +205,54 @@ const generateHtml = (data)  => {
         //get department
         const department = data.map(data => data.department);
         const departmentFinal = department[i];
+        console.log(managerFinal);
         //create the html based on the created person above
+        if(managerFinal !== "null"){
             htmlString[i] = `
-            <div class="card text-dark bg-info m-3" style="width: 18rem; height: 14rem;">
-                <div class="card-header">${employeeFirstNameFinal} ${employeeLastNameFinal}</div>
+            <div class="card text-dark employeeCardBackground m-3 text-capitalize" style="width: 18rem; height: 17rem;">
+                <div class="card-header employeeCardHeader fs-3 fw-bold">${employeeFirstNameFinal} ${employeeLastNameFinal}</div>
                 <div class="card-body">
-                    <h5 class="card-title">${employeeRoleFinal}</h5>
-                    <p class="card-text">Reporting Manager:${managerFinal}</p>
+                    <h5 class="card-title fs-4">${employeeRoleFinal}</h5>
+                    <p class="card-text">Reporting Manager: ${managerFinal}</p>
                     <p class="card-text">Salary: $${salaryFinal}</p>
-                    <p class="card-text">Department:${departmentFinal}</p>
+                    <p class="card-text">Department: ${departmentFinal}</p>
                 </div>
             </div>`;
-        
+    } else {
+        //removes the Reports to <p> Element if they do not have a manager
+        htmlString[i] = `
+            <div class="card text-dark employeeCardBackground m-3 text-capitalize" style="width: 18rem; height: 17rem;">
+                <div class="card-header employeeCardHeader fs-3 fw-bold">${employeeFirstNameFinal} ${employeeLastNameFinal}</div>
+                <div class="card-body">
+                    <h5 class="card-title fs-4">${employeeRoleFinal}</h5>
+                    <p class="card-text">Salary: $${salaryFinal}</p>
+                    <p class="card-text">Department: ${departmentFinal}</p>
+                </div>
+            </div>`;
     };
+};
     const string = `
     <!DOCTYPE html>
         <html lang="en">
         <head>
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Employee Card Generator</title>
+            <title>Employee Report Sheet</title>
             <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
             <link href="./style.css" rel="stylesheet">
         </head>
         <body>
-            <header class="bg-success d-flex justify-content-center align-items-center flex-wrap">
-                <h1 class="text-white">My Team!</h1>
+            <header class="indexHeader d-flex justify-content-center align-items-center flex-wrap">
+                <h1 class="text-white fs-1">Employee Report Sheet</h1>
             </header>
             <section class="d-flex justify-content-center align-items-start flex-wrap">
                 ${htmlString.join('')}
             </section>
+            <script src="../assets/js/index.js"></script>
         </body>
     </html>`;
-    console.log('string is: '+ string);
     res(string)
     }).then(write => {
-        console.log('seconed level of data is: '+write);
         writeFile(write);
     });
 }

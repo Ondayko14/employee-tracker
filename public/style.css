@@ -10,3 +10,7 @@
 .employeeCardHeader {
     background-color: #E5989B;
 }
+
+.employeeCardExtender {
+    height: 8em;
+}

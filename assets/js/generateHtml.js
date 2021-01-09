@@ -2,9 +2,7 @@ async function generateHtml(data) {
     //stores the individual employees with their corresponding values
     let htmlString = [];
     //might not need this
-    if (!data.storage) {
-        data.storage = [];
-    };
+    data.storage = [];
     //console.log(data);
     for (let i = 0; i < data.length; i++) {
 
@@ -71,7 +69,6 @@ async function generateHtml(data) {
             <script src="../assets/js/index.js"></script>
         </body>
     </html>`;
-    console.log('string is: '+ string);
     return string;
 };
 
