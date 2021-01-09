@@ -96,7 +96,6 @@ async function roleQuestions () {
             message: 'Please select a department for this role'
         }
     ]).then(async data => {
-        console.log(data);
         //call a function that looks for the id of the selected dept
         addRole(data.role_name, data.role_salary, await unqiueDept(data))    
     });
@@ -128,7 +127,6 @@ async function newEmployeeQuestions () {
             message: 'Who is this employees manager?' 
         }
     ]).then(async data => {
-        console.log(data);
         //call a function that looks for the id of the selected role
         addEmployee(data.first_name, data.last_name, await uniqueManager(data), await uniqueRole(data));
     });

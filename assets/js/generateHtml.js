@@ -1,3 +1,7 @@
+// THIS DOES NOT CURRENTLY WORK
+// PLEASE DO NOT USE THIS FUNCTION YET
+// REFER TO THE FUNCTION OF THE SAME NAME INSIDE OF THE QUESTIONS.JS FILE
+
 async function generateHtml(data) {
     //stores the individual employees with their corresponding values
     let htmlString = [];
