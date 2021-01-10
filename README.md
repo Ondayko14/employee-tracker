@@ -1,4 +1,4 @@
-# employee-tracker
+# Employee-Tracker
 ## Description
 This is a Report Generator! The application takes the CRUD commands you give it from the commandline and updates a database accordingly. When the user Selects Print from the list of options, the index.html file inside of the public folder will be updated with a report of your current employees. You may select to remove certain elements from inside of the Report page with the "Hide" button.
 
