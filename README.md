@@ -20,7 +20,13 @@ If you do not have mysql installed, please be sure to go the mysql website, down
 ## ScreenShots 
 ![Image of the html Output](./assets/imgs/EmployeeReportSheet1.png)
 ![Image of the server response and questions](./assets/imgs/EmployeeReportInteraction.png)
-       
+
+
+
+## Future Development
+I would like to add more update functions to the command line prompts for the database.
+I would also like to give the index.html page more interaction. Including the ability to modify the Database directly.
+
 ## Licenses
 MIT
 
