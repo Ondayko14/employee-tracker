@@ -54,7 +54,6 @@ const roleUpdate = () => {
             for(let i= 0; i < results.length; i++) {
                 array.push(results[i].title);
             }
-            console.log(array);
             res(array);
         });
     });
@@ -66,7 +65,7 @@ const viewRoles = () => {
         pool.query(`
         SELECT roles.id, roles.title, roles.salary, departments.id, departments.name AS department
         FROM roles
-        RIGHT JOIN departments
+        INNER JOIN departments
         ON (roles.department_id = departments.id)
         `,
         (err, results, _fields) => {
@@ -88,7 +87,6 @@ const employeeChoices = () => {
             for(let i = 0; i < results.length; i++) {
                 array.push(results[i].name);
             };
-            console.log(array);
             res(array);
         });
     });
@@ -102,9 +100,9 @@ const viewEmployees = () => {
         FROM employees e1
         LEFT JOIN employees e2
         ON (e1.manager_id = e2.id)
-        RIGHT JOIN roles
+        INNER JOIN roles
         ON (e1.role_id = roles.id)
-        RIGHT JOIN departments
+        INNER JOIN departments
         ON (roles.department_id = departments.id)`,
         (err, results, _fields) => {
             if(err) console.log(err);
@@ -278,7 +276,6 @@ const addEmployee = (first_name, last_name, manager_id, role_id) => {
 
 //Updates the employees Role
 const finalUpdate = (role, name) => {
-    console.log(role, name);
     return new Promise((res, rej) => {
         pool.execute(`
         UPDATE employee.employees SET role_id = ? WHERE (id = ?)
