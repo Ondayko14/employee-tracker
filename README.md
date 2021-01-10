@@ -8,7 +8,7 @@ https://drive.google.com/file/d/1unt3O3eWPD_2tpEIFjvIWXd2l1dPhZFg/view
 ## How To Use 
 If you do not have mysql installed, please be sure to go the mysql website, download and install.  
   
-1: Run "npm init" and then "mysql -u root -p" and then enter your password.  
+1: Run "npm install" and then "mysql -u root -p" and then enter your password.  
 2: Inside of the mysql command shell, type "SOURCE schema.sql" and then "SOURCE seeds.sql".  
     ALTERNATE: Drag the schema.sql, and seeds.sql files into your workbench and execute them from there.  
 3: Exit you mysql command shell.  
