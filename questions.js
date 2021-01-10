@@ -206,6 +206,7 @@ async function deleteEmployeeQuestions() {
     });
 };
 
+//Generates the HTML for the page
 const generateHtml = (data)  => {
     return new Promise ((res, rej) => {
         if (rej) console.log(rej);
@@ -239,24 +240,30 @@ const generateHtml = (data)  => {
         //create the html based on the created person above
         if(managerFinal !== null){
             htmlString[i] = `
-            <div class="card text-dark employeeCardBackground m-3 text-capitalize" style="width: 18rem; height: 19rem;">
+            <div class="card text-dark employeeCardBackground m-3 text-capitalize CardSizer border border-dark">
                 <div class="card-header employeeCardHeader fs-3 fw-bold">${employeeFirstNameFinal} ${employeeLastNameFinal}</div>
                 <div class="card-body">
-                    <h5 class="card-title fs-4">${employeeRoleFinal}</h5>
-                    <p class="card-text"><span class ="fw-bold">Reporting Manager:</span> ${managerFinal}</p>
-                    <p class="card-text"><span class ="fw-bold">Salary:</span> $${salaryFinal}</p>
-                    <p class="card-text"><span class ="fw-bold">Department:</span> ${departmentFinal}</p>
+                    <h5 class="card-title fs-4 text-decoration-underline">${employeeRoleFinal}</h5>
+                    <p class="card-text"><span class ="fw-bold text-decoration-underline">Reporting Manager:</span> ${managerFinal}</p>
+                    <p class="card-text"><span class ="fw-bold text-decoration-underline">Salary:</span> $${salaryFinal}</p>
+                    <p class="card-text"><span class ="fw-bold text-decoration-underline">Department:</span> ${departmentFinal}</p>
+                    <div class="d-grid gap-2 mt-4">
+                        <button type="button" class="btn btn-danger border border-dark">Hide</button>
+                    </div>
                 </div>
             </div>`;
     } else {
         //removes the Reports to <p> Element if they do not have a manager
         htmlString[i] = `
-            <div class="card text-dark employeeCardBackground m-3 text-capitalize" style="width: 18rem; height: 19rem;">
+            <div class="card text-dark employeeCardBackground m-3 text-capitalize CardSizer border border-dark">
                 <div class="card-header employeeCardHeader fs-3 fw-bold">${employeeFirstNameFinal} ${employeeLastNameFinal}</div>
                 <div class="card-body">
-                    <h5 class="card-title fs-4">${employeeRoleFinal}</h5>
-                    <p class="card-text"><span class ="fw-bold">Salary:</span> $${salaryFinal}</p>
-                    <p class="card-text"><span class ="fw-bold">Department:</span> ${departmentFinal}</p>
+                    <h5 class="card-title fs-4 text-decoration-underline">${employeeRoleFinal}</h5>
+                    <p class="card-text"><span class ="fw-bold text-decoration-underline">Salary:</span> $${salaryFinal}</p>
+                    <p class="card-text"><span class ="fw-bold text-decoration-underline">Department:</span> ${departmentFinal}</p>
+                    <div class="d-grid gap-2 mt-4">
+                        <button type="button" class="btn btn-danger border border-dark">Hide</button>
+                    </div>
                 </div>
             </div>`;
     };
@@ -273,11 +280,12 @@ const generateHtml = (data)  => {
         </head>
         <body>
             <header class="indexHeader d-flex justify-content-center align-items-center flex-wrap">
-                <h1 class="text-white fs-1">Employee Report Sheet</h1>
+                <h1 class="text-white fs-1 indexHeaderText">Employee Report Sheet</h1>
             </header>
             <section class="d-flex justify-content-center align-items-start flex-wrap">
                 ${htmlString.join('')}
             </section>
+            <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
             <script src="../assets/js/index.js"></script>
         </body>
     </html>`;

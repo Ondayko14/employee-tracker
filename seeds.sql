@@ -23,4 +23,4 @@ VALUES
 ('Philip', 'Fry', 3, 1),
 ('Terry', 'Cruzin', 4, 2),
 ('Gary', 'Bob', 1, 1),
-('Terrance', 'TorrentPants', 1, 3);
+('Terrance', 'Torrent', 1, 3);

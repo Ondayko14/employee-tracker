@@ -3,10 +3,19 @@
     height: 8em;
 }
 
+.indexHeaderText {
+    margin-bottom: 0;
+}
+
 .employeeCardBackground {
     background-color: #FFB4A2;
 }
 
 .employeeCardHeader {
     background-color: #E5989B;
+}
+
+.CardSizer {
+    width: 18rem;
+    height: auto;
 }

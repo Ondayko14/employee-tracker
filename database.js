@@ -307,9 +307,9 @@ const sendInformation = () => {
         FROM employees e1
         LEFT JOIN employees e2
         ON (e1.manager_id = e2.id)
-        RIGHT JOIN roles
+        INNER JOIN roles
         ON (e1.role_id = roles.id)
-        RIGHT JOIN departments
+        INNER JOIN departments
         ON (roles.department_id = departments.id)`,
         (err, results, _fields) => {
             if(err) console.log(err);
