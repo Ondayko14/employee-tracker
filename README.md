@@ -34,6 +34,8 @@ MIT
 Javascript  
 JQuery  
 NODE.js  
-MYSQL  
 MYSQL2  
-Inquirer
+Inquirer  
+Bootstrap  
+HTML5  
+CSS3
