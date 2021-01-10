@@ -157,7 +157,6 @@ const managerChoices = () => {
             for (let i = 0; i < results.length; i++) {
                 array.push(results[i].first_name);
             };
-            console.log(array);
             res(array);
         });
     });
@@ -174,7 +173,6 @@ const uniqueManager = (data) => {
             if(err) console.log(err);
             let manager_id = results.map(data => data.id);
             let id = manager_id[0];
-            console.log(id);
             res(id);
         });
     });
@@ -208,7 +206,6 @@ const departmentChoices = () => {
             for (let i = 0; i < results.length; i++) {
                 array.push(results[i].name);
             };
-            console.log(array);
             res(array);
         });
     });

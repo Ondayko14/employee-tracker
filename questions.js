@@ -37,7 +37,15 @@ const viewQuestions = () => {
                 {  
                     type: 'input',
                     name: 'department_name',
-                    message: 'What would you like to call this new Department?'
+                    message: 'What would you like to call this new Department?',
+                    validate: departmentInput => {
+                        if(departmentInput) {
+                            return true;
+                        } else {
+                            console.log('New department insertion has failed, Please Insert a name');
+                            return false;
+                        };
+                    }
                 }
             ).then(question_dept => {
                 //Calls in Add Department
@@ -82,12 +90,27 @@ async function roleQuestions () {
         {
             type: 'input',
             name: 'role_name',
-            message: 'What is the name of this role?'
+            message: 'What is the name of this role?',
+            validate: roleValidate => {
+                if(roleValidate) {
+                    return true;
+                } else {
+                    console.log("Role addition has failed! Please insert the name of the role.")
+                };
+            }
         },
         {
             type: 'input',
             name: 'role_salary',
-            message: 'What is the salary for this position?'
+            message: 'What is the salary for this position?',
+            validate: salaryValidate => {
+                if(salaryValidate) {
+                    return true;
+                } else {
+                    console.log("Salary addition has failed! Please insert a number for the salary.");
+                    return false;
+                }
+            }
         },
         {
             type: 'list',
@@ -107,12 +130,28 @@ async function newEmployeeQuestions () {
         {
             type: 'input',
             name: 'first_name',
-            message: 'What is the employees first name?'
+            message: 'What is the employees first name?',
+            validate: firstNameValidate => {
+                if(firstNameValidate) {
+                    return true;
+                } else {
+                    console.log("The first name addition has failed! Please insert a first name.");
+                    return false;
+                };
+            }
         },
         {
             type: 'input',
             name: 'last_name',
-            message: 'What is the employees last name?'
+            message: 'What is the employees last name?',
+            validate: lastNameValidate => {
+                if(lastNameValidate) {
+                    return true;
+                } else {
+                    console.log("The last name addition has failed! Please insert a last name.");
+                    return false;
+                };
+            }
         },
         {
             type: 'list',
@@ -148,7 +187,6 @@ async function updateEmployee () {
             message: 'What role would you like to give this person?'
         }
     ]).then(async data => {
-        console.log(data);
         //Update the role on the selected employee
         finalUpdate(await uniqueEmployee(data), await uniqueRole(data))
     })
@@ -164,7 +202,6 @@ async function deleteEmployeeQuestions() {
             message: 'Which employee would you like to remove?'
         }
     ]).then(async data => {
-        console.log(data);
         deleteEmployee(await uniqueEmployee(data));
     });
 };
